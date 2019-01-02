@@ -1,0 +1,46 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+  <meta charset="utf-8" />
+  <title>WebSocket</title>
+
+  </head>
+  <body>
+        <h2>WebSocket</h2>
+        <input type="text" id="msg_txt" placeholder="Type your message here" >
+        <button type="button" id="send_msg">Send Message</button>
+        <div id="chatbox"></div>
+  <script language="javascript" type="text/javascript">
+    var sock = new WebSocket("ws://localhost:5001");
+    var chatbox = document.getElementById("chatbox");
+    var name = prompt("What is your Name?");
+
+    sock.onopen =  function(){
+        sock.send(JSON.stringify({
+            type:"Name",
+            data:name
+        }));
+    }
+    sock.onmessage = function(event){
+        
+       console.log(event);
+       var json = JSON.parse(event.data);
+       chatbox.innerHTML += json.name+": "+(json.data) + "<br>";
+    
+    }
+
+    document.getElementById("send_msg").onclick = function(){
+        var msg_txt = document.getElementById("msg_txt").value;
+        sock.send(JSON.stringify({
+            type:"Message",
+            data:msg_txt
+        }));
+        chatbox.innerHTML += "You: "+(msg_txt) + "<br>";
+    }
+
+  
+  </script>
+
+ 
+          </body>
+          </html>
