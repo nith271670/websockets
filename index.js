@@ -9,8 +9,8 @@ app.use(express.static(__dirname + "/"));
 var ser = http.createServer(app);
 ser.listen(port);
 
-var s = new WebSocketServer({server: ser})
-console.log("websocket server created")
+var s = new server({server: ser});
+console.log("websocket server created");
 // /**********/
 
 // var server = require("ws").Server;
